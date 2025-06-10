@@ -12,6 +12,12 @@ TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")  # Format : whatsapp:+141
 
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
+# ✅ Route GET pour tester si l'API est bien en ligne
+@app.get("/")
+def read_root():
+    return {"message": "Askley backend is live ✅"}
+
+# ✅ Route POST pour recevoir les messages WhatsApp
 @app.post("/whatsapp-webhook")
 async def whatsapp_webhook(
     request: Request,
