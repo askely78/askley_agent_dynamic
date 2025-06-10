@@ -5,19 +5,19 @@ from twilio.rest import Client
 
 app = FastAPI()
 
-# Variables d'environnement
+# 🔐 Récupération des variables d'environnement
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
-TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")  # Format : whatsapp:+14155238886
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER") or "whatsapp:+14155238886"
 
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-# ✅ Route GET pour tester si l'API est bien en ligne
+# ✅ Route de test
 @app.get("/")
 def read_root():
     return {"message": "Askley backend is live ✅"}
 
-# ✅ Route POST pour recevoir les messages WhatsApp
+# ✅ Route principale pour webhook WhatsApp
 @app.post("/whatsapp-webhook")
 async def whatsapp_webhook(
     request: Request,
